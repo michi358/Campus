@@ -18,8 +18,9 @@
 	
 	<% Staff staff = (Staff)session.getAttribute("staff"); %>
 	<p>ログインスタッフID:<%= staff.getStaffId() %></p>
-	<p>ログインスタッフ名: <%= staff.getStaffName() %></p>
+	<p>ログインスタッフ名: <%= staff.getStaffName() %></p><br>
 	
+	<input type="button" value="パスワード変更" onclick="location.href='ChangePasswordServlet'"/>
 	<input type="button" value="ログアウト" onclick="location.href='LogoutServlet'"/>
 </body>
 </html>

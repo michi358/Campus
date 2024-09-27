@@ -47,10 +47,10 @@ public class StaffDao extends BaseDao{
 		String pw = staff.getStaffPassword();
 		try {
 			//sql文
-			String sql = "INSERT INTO staff(staff_id,staff_name,login_password VALUE(?,?,?) ";
+			String sql = "INSERT INTO staff(staff_id,staff_name,login_password) VALUES(?,?,?)";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1,id);
-			ps.setString(2, name);
+			ps.setString(2,name);
 			ps.setString(3,pw);
 			ps.executeUpdate();
 		} catch(SQLException e) {
@@ -76,4 +76,41 @@ public class StaffDao extends BaseDao{
 		}
 		return staffId;
 	}
+	//現在のパスワードの確認
+	public String checkPassword(int staffId, String oldPw) throws CampusException{
+		String password = null;
+		try {
+			String sql = "SELECT * FROM staff WHERE staff_id = ? AND login_password = ?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, staffId);
+			ps.setString(2, oldPw);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				password = rs.getString("login_password");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+			throw new CampusException("現在のパスワードの取得に失敗しました");
+		}
+		return password;
+	}
+	//パスワード変更
+	public void updatePassword(Staff changePwStaff) 
+			throws CampusException {
+		int id = changePwStaff.getStaffId();
+		String name = changePwStaff.getStaffName();
+		String pw = changePwStaff.getStaffPassword();
+		try {
+			//sql文
+			String sql = "UPDATE staff SET login_password = ? WHERE staff_id = ?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1,pw);
+			ps.setInt(2,id);
+			ps.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+			throw new CampusException("パスワードの変更に失敗しました");
+		}
+	}
+		
 }

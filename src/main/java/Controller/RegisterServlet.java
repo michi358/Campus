@@ -30,10 +30,11 @@ public class RegisterServlet extends HttpServlet {
 			StaffDao staffDao = new StaffDao();
 			String checkStaffId = staffDao.checkStaffId(id);
 			Staff insertStaff= new Staff(intId,name,password);
-			
 			if(checkStaffId == null) {
 				staffDao.insertStaff(insertStaff);
-				message = "新規登録に成功しました";
+			} else {
+				request.setAttribute("message", "このIDはすでに使われております。");
+				nextPage = "register.jsp";
 			}
 			
 			HttpSession session = request.getSession();
