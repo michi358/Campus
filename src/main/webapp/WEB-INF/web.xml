@@ -9,4 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>StudentMemo</display-name>
+    <servlet-name>StudentMemo</servlet-name>
+    <servlet-class>Controller.StudentMemo</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StudentMemo</servlet-name>
+    <url-pattern>/StudentMemo</url-pattern>
+  </servlet-mapping>
 </web-app>

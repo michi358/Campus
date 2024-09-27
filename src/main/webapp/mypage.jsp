@@ -20,6 +20,8 @@
 	<p>ログインスタッフID:<%= staff.getStaffId() %></p>
 	<p>ログインスタッフ名: <%= staff.getStaffName() %></p><br>
 	
+	<h3><a href="/Campus/StudentServlet">学生一覧</a></h3>
+	
 	<input type="button" value="パスワード変更" onclick="location.href='ChangePasswordServlet'"/>
 	<input type="button" value="ログアウト" onclick="location.href='LogoutServlet'"/>
 </body>
