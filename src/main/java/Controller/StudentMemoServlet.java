@@ -21,7 +21,7 @@ public class StudentMemoServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		//詳細画面へ渡す学生番号の取得
+		//学生番号の取得
 		String findStudentNumber = request.getParameter("student_number");
 		
 		//スタッフ情報の取得
@@ -58,7 +58,6 @@ public class StudentMemoServlet extends HttpServlet {
 			request.setAttribute("studentMemo", studentMemo);
 		} catch(CampusException e) {
 			e.printStackTrace();
-			
 			String message = e.getMessage();
 			request.setAttribute("message", message);
 		}
@@ -68,6 +67,39 @@ public class StudentMemoServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+
+		HttpSession session = request.getSession(false);
+		Staff staff = (Staff)session.getAttribute("staff");
+		String staffId = Integer.toString(staff.getStaffId());;
+		String staffName = staff.getStaffName();
+		
+		String studentNumber = request.getParameter("studentNumber");
+		String studentName = request.getParameter("studentName");
+		String memo = request.getParameter("memo");
+System.out.println("取得" + studentNumber);
+		
+		String message = null;
+		
+		try {
+			StudentDao studentDao = new StudentDao();
+			String memoId = studentDao.findMemoId(studentNumber);
+			
+			StudentMemo studentMemo = 
+					new StudentMemo(studentNumber, studentName, staffId, staffName, memoId, memo);
+			if(memoId == null) {
+				studentDao.insertStudent(studentMemo);
+				message = "学生情報を登録しました";
+			} else {
+				studentDao.updateMemo(studentMemo, memoId);
+				message = "メモを更新しました";
+			}
+			request.setAttribute("studentMemo", studentMemo);
+		} catch(CampusException e) {
+			message = e.getMessage();
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("showMemo.jsp").forward(request, response);
+		}
+		
 
 	}
 

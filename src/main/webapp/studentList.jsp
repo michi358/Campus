@@ -17,6 +17,9 @@
 	
 	<% List<Student> studentList = 
 		(List<Student>)request.getAttribute("studentList"); %>
+	
+	<a href="StudentMemoServlet">新規登録</a>
+	
 	<table>
 		<tr>
 			<th>学生番号</th>
@@ -28,7 +31,9 @@
 			<td><%=studentList.get(i).getStudentNumber() %></td>
 			<td><%=studentList.get(i).getStudentName() %></td>
 			<td>
+				<form action ="StudentMemoServlet" method = "post">
 				<a href="StudentMemoServlet?student_number=<%= studentList.get(i).getStudentNumber() %>">詳細</a>
+				</form>
 			</td>
 			<% } %>
 		</tr>

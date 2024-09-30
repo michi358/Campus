@@ -12,21 +12,20 @@
 	<% if(message != null){%>
 	<%= message %>
 	<% } %>
-	<% StudentMemo studentMemo = (StudentMemo)request.getAttribute("studetMemo"); %>
+	<% StudentMemo studentMemo = (StudentMemo)request.getAttribute("studentMemo"); %>
 
 	<form action ="StudentMemoServlet" method = "post">
 		<label>学生番号</label><br>
-			<input type ="text" name = "studentId" value ="<%= studenMemo.getStudentNumber()%>"/>
+			<input type ="text" name = "studentNumber" value ="<%= studentMemo.getStudentNumber()%>"/>
 		<br>
 		
-		<label>学生氏名
-			<input type ="text" name = "studentNumber" value ="<%= studenMemo.getStudentName()%>"/>
-		</label><br>
+		<label>学生氏名</label><br>
+			<input type ="text" name = "studentName" value ="<%= studentMemo.getStudentName()%>"/><br>
 		
-		<label>メモ
-			<textarea  name = "memo"<%= studenMemo.getStudentNumber()%></textarea>
-		</label><br>
-		<label>更新者</label><p><%= studentMemo.getStaffName %></p>		
+		
+		<label>メモ</label><br>
+			<textarea  name = "memo" ><%= studentMemo.getMemo() %></textarea><br>
+		<label>更新者</label><p><%= studentMemo.getStaffName() %></p><br>
 		<input type = "submit" value = "登録"/>
 	</form>
 
