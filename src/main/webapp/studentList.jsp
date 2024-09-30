@@ -35,9 +35,9 @@
 				<a href="StudentMemoServlet?student_number=<%= studentList.get(i).getStudentNumber() %>">詳細</a>
 				</form>
 			</td>
-			<% } %>
 		</tr>
+		<% } %>
 	</table>
-
+	<a href="/Campus/mypage.jsp">マイページへ戻る</a>
 </body>
 </html>

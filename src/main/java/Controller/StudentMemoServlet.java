@@ -76,19 +76,25 @@ public class StudentMemoServlet extends HttpServlet {
 		String studentNumber = request.getParameter("studentNumber");
 		String studentName = request.getParameter("studentName");
 		String memo = request.getParameter("memo");
-System.out.println("取得" + studentNumber);
-		
+
 		String message = null;
 		
 		try {
 			StudentDao studentDao = new StudentDao();
 			String memoId = studentDao.findMemoId(studentNumber);
+			Student student = studentDao.findStudent(studentNumber);
 			
 			StudentMemo studentMemo = 
 					new StudentMemo(studentNumber, studentName, staffId, staffName, memoId, memo);
 			if(memoId == null) {
-				studentDao.insertStudent(studentMemo);
-				message = "学生情報を登録しました";
+				if(student == null) {
+					studentDao.insertStudent(studentMemo);
+					message = "学生情報を登録しました";
+				} else {
+					studentDao.insertMemo(studentMemo);
+					message = "メモを登録しました";
+					
+				}
 			} else {
 				studentDao.updateMemo(studentMemo, memoId);
 				message = "メモを更新しました";
@@ -96,10 +102,10 @@ System.out.println("取得" + studentNumber);
 			request.setAttribute("studentMemo", studentMemo);
 		} catch(CampusException e) {
 			message = e.getMessage();
-			request.setAttribute("message", message);
-			request.getRequestDispatcher("showMemo.jsp").forward(request, response);
+			
 		}
-		
+		request.setAttribute("message", message);
+		request.getRequestDispatcher("showMemo.jsp").forward(request, response);
 
 	}
 

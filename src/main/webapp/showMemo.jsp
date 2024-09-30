@@ -28,6 +28,7 @@
 		<label>更新者</label><p><%= studentMemo.getStaffName() %></p><br>
 		<input type = "submit" value = "登録"/>
 	</form>
-
+	<a href="/Campus/StudentServlet">学生一覧へ戻る</a><br>
+	<a href="/Campus/mypage.jsp">マイページへ戻る</a>
 </body>
 </html>

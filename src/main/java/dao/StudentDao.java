@@ -86,6 +86,7 @@ public class StudentDao extends BaseDao{
 		try {
 			String sql = "SELECT * FROM student WHERE student_number = ?";
 			ps = con.prepareStatement(sql);
+			ps.setString(1, findStudentNumber);
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
@@ -128,16 +129,14 @@ public class StudentDao extends BaseDao{
 		String memo = studentMemo.getMemo();
 		
 		try {
-			String sql = "INSERT INTO student "
-					+ "SET(student_number,student_name)"
+			String sql = "INSERT INTO student(student_number,student_name)"
 					+ "VALUES(?,?)";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, studentNumber);
 			ps.setString(2, studentName);
 			ps.executeUpdate();
 			
-			sql = "INSERT INTO memo"
-					+ "SET(student_number, update_staff_id, memo)"
+			sql = "INSERT INTO memo(student_number, updated_staff_id, memo)"
 					+ "VALUES(?,?,?)";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, studentNumber);
@@ -149,6 +148,26 @@ public class StudentDao extends BaseDao{
 			throw new CampusException("学生情報の登録に失敗しました");
 		}
 	}
+	//メモのみの新規登録
+	public void insertMemo(StudentMemo studentMemo) 
+			throws CampusException{
+		String studentNumber = studentMemo.getStudentNumber();
+		String staffId = studentMemo.getStaffId();
+		String memo = studentMemo.getMemo();
+		
+		try {
+			String sql = "INSERT INTO memo(student_number, updated_staff_id, memo)"
+					+ "VALUES(?,?,?)";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, studentNumber);
+			ps.setString(2, staffId);
+			ps.setString(3, memo);
+			ps.executeUpdate();
+		} catch(SQLException e){
+			e.printStackTrace();
+			throw new CampusException("メモの登録に失敗しました");
+		}
+	}
 	
 	//memoの更新
 	public void updateMemo(StudentMemo studentMemo, String memoId) 
@@ -157,6 +176,7 @@ public class StudentDao extends BaseDao{
 		String staffId = studentMemo.getStaffId();
 		try {
 			String sql = "UPDATE memo SET memo = ?, updated_staff_id = ? WHERE memo_id = ?";
+			ps = con.prepareStatement(sql);
 			ps.setString(1, memo);
 			ps.setString(2, staffId);
 			ps.setString(3, memoId);

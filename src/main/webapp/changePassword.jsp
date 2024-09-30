@@ -19,6 +19,6 @@
 		<label>新しいパスワード：<input type ="password" name = "newpassword"/></label><br>
 		<input type = "submit" value = "変更する"/>
 	</form>
-
+	<a href="/Campus/mypage.jsp">マイページへ戻る</a>
 </body>
 </html>
